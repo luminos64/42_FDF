@@ -5,8 +5,8 @@ Basics of graphics programming, how to place points in space, connect them, and 
 
 ## Usage
 
-Compile 'make'
+Compile `make`
 
-Run: (for example)  './fdf test_mapps/t1.fdf'
+Run: (for example) `./fdf test_mapps/t1.fdf`
 
 ![Screenshot](img/map_t1.png)
