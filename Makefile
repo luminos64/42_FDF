@@ -4,20 +4,24 @@ CC		= cc
 
 CFLAGS	= -Wextra -Wall -Werror -Wunreachable-code -Ofast -g
 
+OBJ_DIR	= objs
+
+SRC_DIR	= srcs
+
 LIB_MLX	= ./lib/MLX42
 
 LIB_FTP	= ./lib/libft
 
 LIBFT	= ${LIB_FTP}/libft.a
 
-HEADER	= -I ${LIB_FTP} -I ${LIB_MLX}/include
+HEADER	= -I ${LIB_FTP} -I ${LIB_MLX}/include -I .
 
 LIBS	= ${LIB_MLX}/build/libmlx42.a -ldl -lglfw -pthread -lm
 
 SOURCE	= fdf.c key_hook.c projection.c draw.c gnl.c gnl_utils.c split.c \
 			map_utils.c map.c
 
-OBJS	= ${SOURCE:.c=.o}
+OBJS	= ${SOURCE:%.c=${OBJ_DIR}/%.o}
 
 
 all:	${NAME}
@@ -30,11 +34,12 @@ ${NAME}:	${OBJS} ${LIBFT}
 	${CC} ${OBJS} ${CFLAGS} ${LIBS} ${LIBFT} ${HEADER} -o ${NAME}
 	@echo "\033[0;36mFDF Compiled\n\033[0m"
 
-%.o:%.c Makefile fdf.h
+${OBJS}:	${OBJ_DIR}/%.o:	${SRC_DIR}/%.c Makefile fdf.h
+	@mkdir -p ${dir $@}
 	${CC} ${CFLAGS} ${HEADER} -c $< -o $@
 
 clean:
-	rm -rfv ${OBJS}
+	rm -rfv ${OBJ_DIR}
 	@rm -rfv $(LIB_MLX)/build
 	@${MAKE} -C ${LIB_FTP} clean
 	@echo "\033[31mMLX Clean Completed\n\033[0m"

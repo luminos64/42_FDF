@@ -6,7 +6,7 @@
 /*   By: usoontra <usoontra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 18:45:11 by usoontra          #+#    #+#             */
-/*   Updated: 2024/12/08 20:38:17 by usoontra         ###   ########.fr       */
+/*   Updated: 2025/05/04 17:54:15 by usoontra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	input_screen(int argc, char **argv)
 		error = 1;
 	if (error > 0)
 	{
-		ft_putstr_fd("Usage: ./fdf map.fdf\n", 2);
+		write(2, "Usage: ./fdf [map file.fdf]\n", 28);
 		exit (1);
 	}
 }
@@ -83,6 +83,11 @@ int	main(int argc, char **argv)
 {
 	t_fdf	data;
 
+	if (argc != 2)
+	{
+		write(2, "Usage: ./fdf [map file.fdf]\n", 28);
+		return (EXIT_FAILURE);
+	}
 	input_screen(argc, argv);
 	data.map = malloc(sizeof(t_map));
 	read_file(argv[1], data.map);
